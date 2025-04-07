@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register As Donor</title>
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/register-donar.css">
+
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">
+            <a href="index.html"> <img src="images/blood-drop.jpeg" alt="Blood Drop Logo"></a>
+        </div>
+        <nav class="nav-links">
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Find Blood</a></li>
+                <li class="dropdown">
+                    <a href="#">Register Now ▼</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Patient Register</a></li>
+                        <li><a href="register-donar.html">Donor Register</a></li>
+                        <li><a href="organize-register.html">Organization Register</a></li>
+
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <button class="login-btn">Log In</button>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Find Blood</a></li>
+            <li class="dropdown">
+                <a href="#">Register Now ▼</a>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="#">Patient Register</a></li>
+                    <li><a href="register-donar.html">Donor Register</a></li>
+                    <li><a href="organize-register.html">Organization Register</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Log In</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h2>Register As Donor</h2>
+        </div>
+
+        <form>
+            <div class="form-container">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="sign-firstName" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" placeholder="Number" id="sign-phone">
+                </div>
+
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="email" placeholder="Mail Id" id="sign-email" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Address</label>
+                    <textarea placeholder="Type Here" id="sign-address"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" placeholder="Age" id="sign-age">
+                </div>
+                <div class="form-group">
+                    <label>Profile</label>
+                    <input type="file" id="sign-profile">
+                </div>
+
+                <div class="form-group">
+                    <label>Blood Group</label>
+                    <select id="sign-blood-group">
+                        <option>Select</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select id="sign-gender">
+                        <option>Select</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>How Many Units to Donate</label>
+                    <input type="number" placeholder="1 unit equals to 450ml" id="sign-units">
+                </div>
+
+                <div class="form-group">
+                    <label>Availability to donate blood</label>
+                    <select id="sign-available">
+                        <option value="Available">Available</option>
+                        <option value="UnAvailable">UnAvailable</option>
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Last Donation</label>
+                    <input type="date" id="sign-last-donate">
+                </div>
+            </div>
+
+            <div class="form-group checkbox">
+                <input type="checkbox" id="sign-terms">
+                <label for="sign-terms">I agree to the terms and conditions</label>
+            </div>
+
+            <p style="text-align: center;" class="or-text" id="match"> </p>
+
+            <button type="submit" id="submit-btn" class="submit-btn">Submit</button>
+        </form>
+
+    </div>
+
+
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("mobileMenu").classList.toggle("active");
+        }
+
+        function populateDonorData() {
+            let donorData = JSON.parse(localStorage.getItem("DonorData"));
+
+            if (donorData) {
+                document.getElementById("sign-firstName").value = donorData.fullName || "";
+                document.getElementById("sign-email").value = donorData.email || "";
+            }
+        }
+
+        // Call the function when the page loads
+        document.addEventListener("DOMContentLoaded", populateDonorData);
+    </script>
+
+
+
+
+    <!-- <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+        import { getFirestore, updateDoc, doc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAY0RgcKyYbqUiif_tXb_-GZiF-XU_T6cg",
+            authDomain: "blood-bank-94b23.firebaseapp.com",
+            projectId: "blood-bank-94b23",
+            storageBucket: "blood-bank-94b23.firebasestorage.app",
+            messagingSenderId: "108866595341",
+            appId: "1:108866595341:web:5d9c8a83056c53e0c50344"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app); // Firestore database instance
+
+
+
+
+        let donarData = JSON.parse(localStorage.getItem("DonorData"))
+        console.log(donarData);
+
+        document.getElementById("submit-btn").addEventListener("click", async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById("sign-email").value;
+            const fullName = document.getElementById("sign-firstName").value;
+            const unitsToDonate = document.querySelector("#sign-units").value;
+            const gender = document.querySelector("#sign-gender").value;
+            const phoneNumber = document.querySelector("#sign-phone").value;
+            const age = document.querySelector("#sign-age").value;
+            const bloodGroup = document.querySelector("#sign-blood-group").value;
+            const lastDonation = document.querySelector("#sign-last-donate").value;
+            const address = document.querySelector("#sign-address").value;
+            const availability = document.querySelector("#sign-available").value;
+            const profilePic = document.getElementById("sign-profile")
+
+            let profileURL = "";
+            console.log(profilePic);
+
+
+            const fileData = profilePic.files[0]
+            console.log(fileData);
+
+
+
+
+
+            try {
+
+
+                const formData = new FormData()
+                formData.append("file", fileData)
+                formData.append("upload_preset", "Unsigned-vineeth");
+                const cloudRes = await fetch("https://api.cloudinary.com/v1_1/dlrvxuntz/image/upload", {
+                    method: "POST",
+                    body: formData
+                });
+                const cloudData = await cloudRes.json();
+                profileURL = cloudData.secure_url;
+                console.log("Uploaded Profile URL:", profileURL);
+
+
+
+
+                if (donarData && donarData.id) {
+                    const donorRef = doc(db, "users", donarData.id);
+                    await updateDoc(donorRef, {
+                        fullName: fullName,
+                        email: email,
+                        gender: gender,
+                        units: unitsToDonate,
+                        phoneNumber: phoneNumber,
+                        age: age,
+                        address: address,
+                        profileURL: profileURL,
+                        bloodGroup: bloodGroup,
+                        lastDonation: lastDonation,
+                        availability: availability,
+                        updatedAt: new Date()
+                    });
+
+                    alert("Donor details updated successfully!");
+                    window.location.href = "index.html"; // Redirect to homepage
+                } else {
+                    alert("Error: No donor data found.");
+                }
+            } catch (error) {
+                console.log(error);
+                document.getElementById("match").innerText = error.message;
+            }
+        });
+    </script> -->
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+        import { getFirestore, updateDoc, doc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAY0RgcKyYbqUiif_tXb_-GZiF-XU_T6cg",
+            authDomain: "blood-bank-94b23.firebaseapp.com",
+            projectId: "blood-bank-94b23",
+            storageBucket: "blood-bank-94b23.firebasestorage.app",
+            messagingSenderId: "108866595341",
+            appId: "1:108866595341:web:5d9c8a83056c53e0c50344"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const donarData = JSON.parse(localStorage.getItem("DonorData"));
+        console.log(donarData);
+
+        // Handle form submit
+        document.getElementById("submit-btn").addEventListener("click", async (e) => {
+            e.preventDefault();
+
+            const formValues = getFormValues();
+            const file = document.getElementById("sign-profile").files[0];
+
+            try {
+                const profileURL = await uploadImageToCloudinary(file);
+
+                await updateDonorInFirestore({
+                    ...formValues,
+                    profilePic: profileURL
+                });
+
+                alert("Donor details updated successfully!");
+                window.location.href = "donor-dashboard.html";
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById("match").innerText = error.message;
+            }
+        });
+
+        // 🧩 Function to collect form values
+        function getFormValues() {
+            return {
+                email: document.getElementById("sign-email").value,
+                fullName: document.getElementById("sign-firstName").value,
+                phoneNumber: document.getElementById("sign-phone").value,
+                age: document.getElementById("sign-age").value,
+                address: document.getElementById("sign-address").value,
+                gender: document.getElementById("sign-gender").value,
+                bloodGroup: document.getElementById("sign-blood-group").value,
+                lastDonation: document.getElementById("sign-last-donate").value,
+                availability: document.getElementById("sign-available").value,
+                units: document.getElementById("sign-units").value
+            };
+        }
+
+        // 🧩 Function to upload image to Cloudinary
+        async function uploadImageToCloudinary(file) {
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", "Unsigned-vineeth");
+
+            const response = await fetch("https://api.cloudinary.com/v1_1/dlrvxuntz/image/upload", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+            if (!data.secure_url) throw new Error("Image upload failed");
+            return data.secure_url;
+        }
+
+        // 🧩 Function to update donor in Firestore
+        async function updateDonorInFirestore(data) {
+            if (donarData && donarData.id) {
+                const donorRef = doc(db, "users", donarData.id);
+                await updateDoc(donorRef, {
+                    ...data,
+                    updatedAt: new Date()
+                });
+            } else {
+                throw new Error("No donor data found.");
+            }
+        }
+    </script>
+
+</body>
+
+</html>

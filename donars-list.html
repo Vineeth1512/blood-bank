@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation List</title>
+
+    <link rel="stylesheet" href="css/donor-list.css">
+    <link rel="stylesheet" href="css/header.css">
+</head>
+
+<body>
+
+
+    <header>
+        <div class="logo">
+            <a href="index.html"><img src="images/blood-drop.jpeg" alt="Blood Drop Logo"></a>
+        </div>
+        <nav class="nav-links">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li class="dropdown">
+                    <a href="#">Looking For Blood</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="donars-list.html">Donor List</a></li>
+                        <li><a href="organize-list.html">Blood Bank List</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Donate Blood</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="patient-register.html">Patient Register</a></li>
+                        <li><a href="donor-register.html">Donor Register</a></li>
+                        <li><a href="organize-register.html">Organization Register</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <button class="login-btn">Log In</button>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li class="dropdown">
+                <a href="#">Looking For Blood</a>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="donars-list.html">Donor List</a></li>
+                    <li><a href="organize-list.html">Blood Bank List</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#">Donate Blood</a>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="#">Patient Register</a></li>
+                    <li><a href="register-donar.html">Donor Register</a></li>
+                    <li><a href="organize-register.html">Organization Register</a></li>
+                </ul>
+            </li>
+            <li><a href="login.html">Log In</a></li>
+        </ul>
+    </div>
+
+    <div class="content-wrap">
+
+
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('donors')">Blood Donors</button>
+            <button class="tab-btn" onclick="showTab('banks')">Blood Banks</button>
+        </div>
+
+        <!-- Blood Donors List -->
+        <div id="donors" class="tab-content active">
+
+        </div>
+
+        <!-- Blood Banks List -->
+        <div id="banks" class="tab-content">
+            <div class="blood-bank-card">
+                <h3>NAME OF THE BLOOD BANK</h3>
+                <p>ABC Hospital Building, XYZ Road, Place, District<br>Pincode</p>
+                <p><strong>Contact Number:</strong> XXXXXXXXXX</p>
+                <button class="location-btn">View Location</button>
+            </div>
+
+            <div class="blood-bank-card">
+                <h3>NAME OF THE BLOOD BANK</h3>
+                <p>ABC Hospital Building, XYZ Road, Place, District<br>Pincode</p>
+                <p><strong>Contact Number:</strong> XXXXXXXXXX</p>
+                <button class="location-btn">View Location</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAY0RgcKyYbqUiif_tXb_-GZiF-XU_T6cg",
+            authDomain: "blood-bank-94b23.firebaseapp.com",
+            projectId: "blood-bank-94b23",
+            storageBucket: "blood-bank-94b23.firebasestorage.app",
+            messagingSenderId: "108866595341",
+            appId: "1:108866595341:web:5d9c8a83056c53e0c50344"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app); // Firestore database instance
+
+        // Function to fetch data from Firestore
+        window.editDonor = (donor) => {
+
+            localStorage.setItem("DonorData", JSON.stringify(donor)); // Store donor data
+            window.location.href = `donor-edit.html?id=${donor.id}`;
+        }
+        async function fetchData() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "users")); // Fetch all users
+
+                let usersArray = [];
+
+                querySnapshot.forEach((doc) => {
+                    let userData = doc.data();
+                    console.log(userData);
+                    if (userData.role === "donor") {
+
+                        // Only push donors
+                        usersArray.push({ id: doc.id, ...userData });
+                    }
+                });
+
+                let donorsContainer = document.querySelector("#donors");
+                donorsContainer.innerHTML = ""; // Clear previous content
+
+                usersArray.forEach((donor) => {
+                    donorsContainer.innerHTML += `
+                <div class="donor-card">
+                    <h3>Name: ${donor.fullName}</h3>
+                    <p><strong>Blood Group:</strong> ${donor.bloodGroup || "N/A"}</p>
+                    <p><strong>Age:</strong> ${donor.age || "N/A"}</p>
+                     <p><strong>Phone :</strong> ${donor.phoneNumber || "N/A"}</p>
+                    <p><strong>Gender:</strong> ${donor.gender || "N/A"}</p>
+                    <p><strong>Location:</strong> ${donor.address || "N/A"}</p>
+                    <p><strong>Last Donation:</strong> ${donor.lastDonation || "N/A"}</p>
+                      <p><strong>Availability to Donate Blood : </strong> ${donor.availability || "N/A"}</p>
+                    
+                </div>
+            `;
+
+                });
+
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+
+
+
+
+
+        fetchData();
+    </script>
+
+
+</body>
+
+</html>

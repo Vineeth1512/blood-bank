@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register As Donor</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/register-donar.css">
+    <link rel="stylesheet" href="css/header.css">
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">
+            <a href="index.html"> <img src="images/blood-drop.jpeg" alt="Blood Drop Logo"></a>
+        </div>
+        <nav class="nav-links">
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Find Blood</a></li>
+                <li class="dropdown">
+                    <a href="#">Register Now ▼</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Patient Register</a></li>
+                        <li><a href="register-donar.html">Donor Register</a></li>
+                        <li><a href="organize-register.html">Organization Register</a></li>
+
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <button class="login-btn">Log In</button>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Find Blood</a></li>
+            <li class="dropdown">
+                <a href="#">Register Now ▼</a>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="#">Patient Register</a></li>
+                    <li><a href="register-donar.html">Donor Register</a></li>
+                    <li><a href="organize-register.html">Organization Register</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Log In</a></li>
+        </ul>
+    </div>
+
+
+    <div class="container">
+        <div class="header">
+            <h2>Register As Organization</h2>
+        </div>
+
+        <form>
+            <div class="form-group">
+                <label>Organization Name</label>
+                <input type="text" placeholder="Organization Name">
+            </div>
+
+            <div class="form-group">
+                <label>Head of Organization</label>
+                <input type="text" placeholder="Organization Head Location">
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="Mail Id">
+            </div>
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="number" placeholder="Phone Number">
+            </div>
+
+            <div class="form-group">
+                <label>Address</label>
+                <textarea placeholder="Type Here"></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            let menu = document.getElementById("mobileMenu");
+            menu.classList.toggle("active");
+        }
+    </script>
+
+    <style>
+        .nav-links {
+            display: flex;
+        }
+
+        .nav-links.active {
+            display: block;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: black;
+            margin: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+        }
+    </style>
+</body>
+
+</html>

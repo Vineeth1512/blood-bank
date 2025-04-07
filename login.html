@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/header.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="index.html"><img src="images/blood-drop.jpeg" alt="Blood Drop Logo"></a>
+        </div>
+        <nav class="nav-links">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li class="dropdown">
+                    <a href="#">Looking For Blood</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="donars-list.html">Donor List</a></li>
+                        <li><a href="organize-list.html">Blood Bank List</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Donate Blood</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="patient-register.html">Patient Register</a></li>
+                        <li><a href="donor-register.html">Donor Register</a></li>
+                        <li><a href="organize-register.html">Organization Register</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <button class="login-btn">Log In</button>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li class="dropdown">
+                <a href="#">Looking For Blood</a>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="donars-list.html">Donor List</a></li>
+                    <li><a href="organize-list.html">Blood Bank List</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#">Donate Blood</a>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="#">Patient Register</a></li>
+                    <li><a href="register-donar.html">Donor Register</a></li>
+                    <li><a href="organize-register.html">Organization Register</a></li>
+                </ul>
+            </li>
+            <li><a href="login.html">Log In</a></li>
+        </ul>
+    </div>
+
+    <div class="login-container">
+        <div class="login-left">
+            <!-- Add optional image or content -->
+        </div>
+        <div class="login-right">
+            <h2>Login</h2>
+            <form>
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required />
+
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required />
+
+                <a href="forgot-password.html" class="forgot-password">Forgot Password?</a>
+                <p class="or-text" id="match"></p>
+                <button type="submit" class="login-button" id="login-button">Login</button>
+
+                <p class="or-text">Don't have an account? <a href="register.html">Sign up here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+        import { getFirestore, getDoc, doc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+
+        const donorFirebaseConfig = {
+            apiKey: "AIzaSyAY0RgcKyYbqUiif_tXb_-GZiF-XU_T6cg",
+            authDomain: "blood-bank-94b23.firebaseapp.com",
+            projectId: "blood-bank-94b23",
+            storageBucket: "blood-bank-94b23.firebasestorage.app",
+            messagingSenderId: "108866595341",
+            appId: "1:108866595341:web:5d9c8a83056c53e0c50344"
+        };
+
+        const patientFirebaseConfig = {
+            apiKey: "AIzaSyB0FeNmR15EAASokGjDMzqQBmXGRDxhipY",
+            authDomain: "blood-bank-patient.firebaseapp.com",
+            projectId: "blood-bank-patient",
+            storageBucket: "blood-bank-patient.firebasestorage.app",
+            messagingSenderId: "345768879626",
+            appId: "1:345768879626:web:850afb2b5deb9cba70a1f3",
+            measurementId: "G-SLQRXYNNTN"
+        };
+
+        const donorApp = initializeApp(donorFirebaseConfig, "donorApp");
+        const patientApp = initializeApp(patientFirebaseConfig, "patientApp");
+
+        const donorAuth = getAuth(donorApp);
+        const patientAuth = getAuth(patientApp);
+
+        const donorDb = getFirestore(donorApp);
+        const patientDb = getFirestore(patientApp);
+
+        document.querySelector("form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const match = document.querySelector("#match");
+
+            if (!email || !password) {
+                match.innerText = "Please enter both email and password!";
+                return;
+            }
+
+            let userCredential = null;
+            let db = null;
+            let auth = null;
+            let userRole = null;
+            let project = "";
+
+            try {
+                console.log("Trying login with patientAuth...");
+                userCredential = await signInWithEmailAndPassword(patientAuth, email, password);
+                db = patientDb;
+                auth = patientAuth;
+                project = "patient";
+                console.log("Patient login successful");
+            } catch (error) {
+                console.log("Patient login failed:", error.code);
+            }
+
+            if (!userCredential) {
+                try {
+                    console.log("Trying login with donorAuth...");
+                    userCredential = await signInWithEmailAndPassword(donorAuth, email, password);
+                    db = donorDb;
+                    auth = donorAuth;
+                    project = "donor";
+                    console.log("Donor login successful");
+                } catch (error) {
+                    console.log("Donor login failed:", error.code);
+                }
+            }
+
+            if (!userCredential) {
+                match.innerText = "Login failed. User not found in both systems.";
+                return;
+            }
+
+            const user = userCredential.user;
+
+            try {
+                const userDocRef = doc(db, "users", user.uid);
+                const userDocSnap = await getDoc(userDocRef);
+
+                if (userDocSnap.exists()) {
+                    userRole = userDocSnap.data().role;
+                    localStorage.setItem("AuthToken", user.accessToken);
+                    localStorage.setItem("UserRole", userRole);
+                    localStorage.setItem("Project", project);
+
+                    const roleRedirects = {
+                        "donor": "donor-update.html",
+                        "patient": "patient-update-detail.html",
+                        "admin": "admin-dashboard.html"
+                    };
+
+                    window.location.href = roleRedirects[userRole] || "login.html";
+                } else {
+                    alert("Login successful, but user data not found!");
+                    window.location.href = "login.html";
+                }
+            } catch (error) {
+                match.innerText = "Error retrieving user data. Try again.";
+            }
+        });
+    </script>
+</body>
+
+</html>

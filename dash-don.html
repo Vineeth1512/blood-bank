@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Donor Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: #333;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #1d3557;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #457b9d;
+        }
+
+        .profile-info p,
+        .history li,
+        .notifications li,
+        .appointment-info p {
+            margin: 0.4rem 0;
+        }
+
+        .availability-form input,
+        .availability-form textarea,
+        .availability-form button {
+            width: 100%;
+            margin: 0.5rem 0;
+            padding: 0.7rem;
+            border-radius: 0.5rem;
+            border: 1px solid #ccc;
+        }
+
+        .availability-form button {
+            background-color: #1d3557;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .availability-form button:hover {
+            background-color: #264653;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Welcome, Jane Smith</h1>
+        <p>Thank you for being a lifesaver ❤️</p>
+    </header>
+
+    <section class="dashboard">
+        <!-- Profile Overview -->
+        <div class="card profile-info">
+            <h2>Donor Profile</h2>
+            <p><strong>Name:</strong> Jane Smith</p>
+            <p><strong>Age:</strong> 32</p>
+            <p><strong>Gender:</strong> Female</p>
+            <p><strong>Blood Group:</strong> O+</p>
+            <p><strong>Location:</strong> Karimnagar</p>
+            <p><strong>Contact:</strong> janesmith@example.com</p>
+        </div>
+
+        <!-- Donation History -->
+        <div class="card history">
+            <h2>Donation History</h2>
+            <ul>
+                <li>🩸 Donated to Ramesh (B+), Jan 2025</li>
+                <li>🩸 Donated to Hospital Blood Bank, Nov 2024</li>
+            </ul>
+        </div>
+
+        <!-- Availability Update -->
+        <div class="card availability-form">
+            <h2>Update Availability</h2>
+            <form>
+                <input type="date" required>
+                <input type="text" placeholder="Preferred Location" required>
+                <textarea rows="3" placeholder="Any medical conditions or notes"></textarea>
+                <button type="submit">Update Availability</button>
+            </form>
+        </div>
+
+        <!-- Notifications -->
+        <div class="card notifications">
+            <h2>Notifications</h2>
+            <ul>
+                <li>📅 New donation request from City Hospital (A-)</li>
+                <li>✅ You successfully donated on Jan 14</li>
+                <li>📢 Blood Camp on April 10 at Apollo Hospitals</li>
+            </ul>
+        </div>
+
+        <!-- Appointment Info -->
+        <div class="card appointment-info">
+            <h2>Upcoming Appointments</h2>
+            <p>📍 Location: Red Cross Karimnagar</p>
+            <p>🗓️ Date: April 15, 2025</p>
+            <p>🕐 Time: 10:00 AM</p>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2025 Blood Donation System | Designed by Vineeth Kumar
+    </footer>
+
+</body>
+
+</html>

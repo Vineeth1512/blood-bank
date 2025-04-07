@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donor Profile</title>
+    <link rel="stylesheet" href="css/header.css">
+    <style>
+        .container-wrap {
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .profile-card {
+            background: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            justify-content: space-between;
+        }
+
+        .profile-picture {
+            width: 80px;
+            height: 80px;
+            background: #ddd;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .edit-btn {
+            padding: 10px 15px;
+            background: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .details-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .details-card h3 {
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table tr td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #loading {
+            text-align: center;
+            font-size: 18px;
+            color: gray;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">
+            <a href="index.html"> <img src="images/blood-drop.jpeg" alt="Blood Drop Logo"></a>
+        </div>
+        <nav class="nav-links">
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="#">About Us</a></li>
+
+
+                <li class="dropdown">
+                    <a href="#">Looking For Blood</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="donars-list.html">Donar List</a></li>
+                        <li><a href="organize-list.html">Blood Bank List</a></li>
+
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Donate Blood</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="patient-register.html">Patient Register</a></li>
+                        <li><a href="donor-register.html">Donor Register</a></li>
+                        <li><a href="organize-register.html">Organization Register</a></li>
+                    </ul>
+                </li>
+
+                <!-- <li class="dropdown">
+                    <a href="#">Register Now ▼</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Patient Register</a></li>
+                        <li><a href="register-donar.html">Donor Register</a></li>
+                        <li><a href="organize-register.html">Organization Register</a></li>
+
+                    </ul>
+                </li> -->
+            </ul>
+        </nav>
+
+        <div class="profile-dropdown">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBb2P4yPPrTY_H7OpNzOPDL1-z8soSbx8vJg&s"
+                alt="Profile" id="header-profile" class="profile-pic" onclick="toggleProfileDropdown()" />
+            <ul class="profile-menu" id="profileMenu">
+                <li><a href="patient-edit.html">Edit Profile</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">About Us</a></li>
+
+            <li class="dropdown">
+                <a href="#">Looking For Blood</a>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="donars-list.html">Donar List</a></li>
+                    <li><a href="organize-list.html">Blood Bank List</a></li>
+
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#">Donate Blood</a>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="patient-register.html">Patient Register</a></li>
+                    <li><a href="donor-register.html">Donor Register</a></li>
+                    <li><a href="organize-register.html">Organization Register</a></li>
+                </ul>
+            </li>
+            <li><a href="login.html">Log In</a></li>
+        </ul>
+    </div>
+    <section class="container-wrap">
+
+
+        <div class="container">
+            <div class="profile-section">
+                <div class="profile-card">
+                    <img src="images/blood-drop.jpeg" id="profile-picture" class="profile-picture"
+                        alt="Profile Picture">
+                    <h2 id="patient-name">Loading...</h2>
+                    <button class="edit-btn" onclick="editPatient()">Edit Profile</button>
+                </div>
+
+                <div class="details-card">
+                    <h3>About</h3>
+                    <p id="loading">Fetching patient details...</p>
+                    <table id="patient-table" style="display: none;">
+                        <tr>
+                            <td>Full Name</td>
+                            <td id="patient-fullName"></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td id="patient-email"></td>
+                        </tr>
+                        <tr>
+                            <td>District</td>
+                            <td id="patient-district"></td>
+                        </tr>
+                        <tr>
+                            <td>Phone Number</td>
+                            <td id="patient-phone"></td>
+                        </tr>
+                        <tr>
+                            <td>Pincode</td>
+                            <td id="patient-pincode"></td>
+                        </tr>
+                        <tr>
+                            <td>Age</td>
+                            <td id="patient-age"></td>
+                        </tr>
+                        <tr>
+                            <td>Blood Group</td>
+                            <td id="patient-bloodGroup"></td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td id="patient-address"></td>
+                        </tr>
+                        <tr>
+                            <td>Required Blood Type</td>
+                            <td id="patient-blood-type"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAY0RgcKyYbqUiif_tXb_-GZiF-XU_T6cg",
+            authDomain: "blood-bank-94b23.firebaseapp.com",
+            projectId: "blood-bank-94b23",
+            storageBucket: "blood-bank-94b23.firebasestorage.app",
+            messagingSenderId: "108866595341",
+            appId: "1:108866595341:web:5d9c8a83056c53e0c50344"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.editPatient = () => {
+            console.log("clicked");
+
+            let patientData = JSON.parse(localStorage.getItem("patientData"));
+            if (patientData) {
+                localStorage.setItem("patientData", JSON.stringify(patientData));
+                window.location.href = `patient-edit.html?id=${patientData.id}`;
+
+            } else {
+                alert("Error: Patient data not found.");
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            let patientData = JSON.parse(localStorage.getItem("patientData"));
+
+            if (!patientData || !patientData.id) {
+                alert("Error: Patient data not found. Please register again.");
+                window.location.href = "patient-register.html";
+                return;
+            }
+
+            const patientRef = doc(db, "users", patientData.id);
+
+            try {
+                const docSnap = await getDoc(patientRef);
+
+                if (docSnap.exists()) {
+                    const patient = docSnap.data();
+
+                    document.getElementById("patient-name").innerText = patient.fullName || "patient";
+                    document.getElementById("patient-fullName").innerText = patient.fullName || "N/A";
+                    document.getElementById("patient-email").innerText = patient.email || "N/A";
+                    document.getElementById("patient-district").innerText = patient.district || "N/A";
+                    document.getElementById("patient-phone").innerText = patient.phoneNumber || "N/A";
+                    document.getElementById("patient-pincode").innerText = patient.pincode || "N/A";
+                    document.getElementById("patient-age").innerText = patient.age || "N/A";
+                    document.getElementById("patient-bloodGroup").innerText = patient.bloodGroup || "N/A";
+                    document.getElementById("patient-address").innerText = patient.address || "N/A";
+                    document.getElementById("patient-blood-type").innerText = patient.bloodType || "N/A";
+                    if (patient.profilePic) {
+                        document.getElementById("profile-picture").src = patient.profilePic;
+                        document.getElementById("header-profile").src = patient.profilePic
+                    }
+
+                    document.getElementById("loading").style.display = "none";
+                    document.getElementById("patient-table").style.display = "table";
+
+                } else {
+                    alert("Pateint not found.");
+                    window.location.href = "patient-register.html";
+                }
+            } catch (error) {
+                console.error("Error fetching Pateint data:", error);
+                alert("An error occurred. Please try again later.");
+            }
+        });
+    </script>
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector('.mobile-menu');
+            menu.classList.toggle('active');
+        }
+
+        function toggleProfileDropdown() {
+            const menu = document.getElementById('profileMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        window.addEventListener('click', function (e) {
+            const menu = document.getElementById('profileMenu');
+            const profilePic = document.querySelector('.profile-pic');
+            if (!profilePic.contains(e.target) && !menu.contains(e.target)) {
+                menu.style.display = 'none';
+            }
+        });
+
+        function logout() {
+            alert("You have been logged out.");
+            // Clear localStorage/sessionStorage if used
+            // Redirect to login page
+            window.location.href = "patient-login.html";
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.0/dist/tailwind.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <button class="bg-blue-500 text-white px-4 py-2 rounded-md">Click Me</button>
+
+    <!--?xml version="1.0" standalone="no"?--> <svg id="sw-js-blob-svg" viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="sw-gradient" x1="0" x2="1" y1="1" y2="0">
+                <stop id="stop1" stop-color="rgba(217.504, 112.432, 62.703, 1)" offset="0%"></stop>
+                <stop id="stop2" stop-color="rgba(228.888, 5.25, 28.45, 1)" offset="100%"></stop>
+            </linearGradient>
+        </defs>
+        <path fill="url(#sw-gradient)"
+            d="M18.6,-22.2C25.7,-16.3,34,-11.9,34.7,-6.3C35.5,-0.7,28.8,6,24.1,13.7C19.4,21.4,16.7,30,10.9,33.9C5,37.8,-4.1,36.9,-11.5,33.4C-18.9,29.9,-24.8,23.8,-29.6,16.5C-34.4,9.3,-38.3,0.9,-36.6,-6C-34.8,-12.9,-27.4,-18.4,-20.4,-24.3C-13.4,-30.2,-6.7,-36.4,-0.4,-35.9C5.8,-35.4,11.6,-28.1,18.6,-22.2Z"
+            width="100%" height="100%" transform="translate(50 50)" stroke-width="0"
+            style="transition: all 0.3s ease 0s;" stroke="url(#sw-gradient)"></path>
+    </svg>
+    <script> configObj = { "buttonD": "M11.384 13.333h9.232c.638 0 .958.68.505 1.079l-4.613 4.07c-.28.246-.736.246-1.016 0l-4.613-4.07c-.453-.399-.133-1.079.505-1.079z", "buttonT": "translate(-1028 -172) translate(832 140) translate(32 32) translate(164) matrix(1 0 0 -1 0 32)", "shadowSize": "none", "roundnessSize": "12px", "buttonDToBottom": "32px", "buttonDToRight": "32px", "selectedBackgroundColor": "#ff0a16", "selectedIconColor": "#f6efef", "buttonWidth": "40px", "buttonHeight": "40px", "svgWidth": "32px", "svgHeight": "32px" }; function createButton(obj, pageSimulator) {
+            const body = document.querySelector("body");
+            backToTopButton = document.createElement("span");
+            backToTopButton.classList.add("softr-back-to-top-button");
+            backToTopButton.id = "softr-back-to-top-button"; pageSimulator ? pageSimulator.appendChild(backToTopButton) : body.appendChild(backToTopButton); backToTopButton.style.width = obj.buttonWidth; backToTopButton.style.height = obj.buttonHeight; backToTopButton.style.marginRight = obj.buttonDToRight; backToTopButton.style.marginBottom = obj.buttonDToBottom; backToTopButton.style.borderRadius = obj.roundnessSize; backToTopButton.style.boxShadow = obj.shadowSize; backToTopButton.style.color = obj.selectedBackgroundColor; backToTopButton.style.backgroundColor = obj.selectedBackgroundColor; pageSimulator ? backToTopButton.style.position = "absolute" : backToTopButton.style.position = "fixed"; backToTopButton.style.outline = "none"; backToTopButton.style.bottom = "0px"; backToTopButton.style.right = "0px"; backToTopButton.style.cursor = "pointer"; backToTopButton.style.textAlign = "center"; backToTopButton.style.border = "solid 2px currentColor"; backToTopButton.innerHTML = '<svg class="back-to-top-button-svg" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" > <g fill="none" fill-rule="evenodd"> <path d="M0 0H32V32H0z" transform="translate(-1028 -172) translate(832 140) translate(32 32) translate(164) matrix(1 0 0 -1 0 32)" /> <path class="back-to-top-button-img" fill-rule="nonzero" d="M11.384 13.333h9.232c.638 0 .958.68.505 1.079l-4.613 4.07c-.28.246-.736.246-1.016 0l-4.613-4.07c-.453-.399-.133-1.079.505-1.079z" transform="translate(-1028 -172) translate(832 140) translate(32 32) translate(164) matrix(1 0 0 -1 0 32)" /> </g> </svg>';
+            backToTopButtonSvg = document.querySelector(".back-to-top-button-svg");
+            backToTopButtonSvg.style.verticalAlign = "middle";
+            backToTopButtonSvg.style.margin = "auto";
+            backToTopButtonSvg.style.justifyContent = "center";
+            backToTopButtonSvg.style.width = obj.svgWidth;
+            backToTopButtonSvg.style.height = obj.svgHeight;
+            backToTopButton.appendChild(backToTopButtonSvg);
+            backToTopButtonImg = document.querySelector(".back-to-top-button-img");
+            backToTopButtonImg.style.fill = obj.selectedIconColor;
+            backToTopButtonSvg.appendChild(backToTopButtonImg); backToTopButtonImg.setAttribute("d", obj.buttonD); backToTopButtonImg.setAttribute("transform", obj.buttonT);
+            if (!pageSimulator) {
+                backToTopButton.style.display = "none"; window.onscroll = function () {
+                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                        backToTopButton.style.display = "block";
+                    } else {
+                        backToTopButton.style.display = "none";
+                    }
+                };
+                backToTopButton.onclick = function () {
+                    document.body.scrollTop = 0; document.documentElement.scrollTop = 0;
+                };
+            }
+        }; document.addEventListener("DOMContentLoaded", function () {
+            createButton(configObj, null);
+        });</script>
+</body>
+
+</html>

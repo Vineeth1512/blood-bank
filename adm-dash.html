@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f0f4f8;
+            padding: 2rem;
+            color: #333;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #2b2d42;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #1d3557;
+        }
+
+        .overview p,
+        .user-list li,
+        .request-list li,
+        .camp-list li {
+            margin: 0.4rem 0;
+        }
+
+        .create-camp-form input,
+        .create-camp-form textarea,
+        .create-camp-form button {
+            width: 100%;
+            margin: 0.5rem 0;
+            padding: 0.7rem;
+            border-radius: 0.5rem;
+            border: 1px solid #ccc;
+        }
+
+        .create-camp-form button {
+            background-color: #2b2d42;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .create-camp-form button:hover {
+            background-color: #1a1c2c;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Admin Dashboard</h1>
+        <p>Welcome, Admin Vineeth</p>
+    </header>
+
+    <section class="dashboard">
+        <!-- Overview -->
+        <div class="card overview">
+            <h2>System Overview</h2>
+            <p>👨‍⚕️ Total Donors: <strong>125</strong></p>
+            <p>🩸 Total Patients: <strong>80</strong></p>
+            <p>📦 Total Requests: <strong>58</strong></p>
+            <p>📍 Upcoming Camps: <strong>3</strong></p>
+        </div>
+
+        <!-- Donor List -->
+        <div class="card user-list">
+            <h2>Recent Donors</h2>
+            <ul>
+                <li>🧑‍💼 John (B+) - Hyderabad</li>
+                <li>👩‍💼 Priya (O-) - Karimnagar</li>
+                <li>🧑‍💼 Arjun (A+) - Warangal</li>
+            </ul>
+        </div>
+
+        <!-- Patient Requests -->
+        <div class="card request-list">
+            <h2>Recent Blood Requests</h2>
+            <ul>
+                <li>🩸 B+ - 2 Units - Pending</li>
+                <li>🩸 A- - 1 Unit - Approved</li>
+                <li>🩸 O+ - 3 Units - Rejected</li>
+            </ul>
+        </div>
+
+        <!-- Create Camp -->
+        <div class="card create-camp-form">
+            <h2>Create Blood Camp</h2>
+            <form>
+                <input type="text" placeholder="Camp Name" required />
+                <input type="date" required />
+                <input type="text" placeholder="Location" required />
+                <textarea rows="3" placeholder="Description / Notes"></textarea>
+                <button type="submit">Create Camp</button>
+            </form>
+        </div>
+
+        <!-- Upcoming Camps -->
+        <div class="card camp-list">
+            <h2>Upcoming Blood Camps</h2>
+            <ul>
+                <li>📍 Apollo Hospital - Apr 10</li>
+                <li>📍 Red Cross Center - Apr 15</li>
+                <li>📍 City Hospital - Apr 20</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2025 Blood Donation System | Designed by Vineeth Kumar
+    </footer>
+
+</body>
+
+</html>

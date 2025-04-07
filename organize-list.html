@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation List</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/organize-list.css">
+</head>
+
+<body>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('donors')">Blood Donors</button>
+        <button class="tab-btn" onclick="showTab('banks')">Blood Banks</button>
+    </div>
+
+    <div id="banks" class="tab-content active">
+        <div class="blood-bank-card">
+            <h3>NAME OF THE BLOOD BANK</h3>
+            <p>ABC Hospital Building, XYZ Road, Place, District<br>Pincode</p>
+            <p><strong>Contact Number:</strong> XXXXXXXXXX</p>
+            <button class="location-btn">View Location</button>
+        </div>
+
+        <div class="blood-bank-card">
+            <h3>NAME OF THE BLOOD BANK</h3>
+            <p>ABC Hospital Building, XYZ Road, Place, District<br>Pincode</p>
+            <p><strong>Contact Number:</strong> XXXXXXXXXX</p>
+            <button class="location-btn">View Location</button>
+        </div>
+    </div>
+
+    <div id="donors" class="tab-content">
+        <p>List of blood donors will be displayed here...</p>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+
+</body>
+
+</html>

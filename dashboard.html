@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            background: #f5f5f5;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #ff4d4d;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        .sidebar a:hover {
+            background: #e63939;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .content-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table tr th,
+        table tr td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>Blood Donation</h2>
+        <a href="#">Home</a>
+        <a href="#">Admin Dashboard</a>
+        <a href="#">Donor Dashboard</a>
+        <a href="#">Patient Dashboard</a>
+        <a href="#">Blood Requests</a>
+        <a href="#">Reports</a>
+        <a href="#">Logout</a>
+    </div>
+    <div class="container">
+        <div class="dashboard-header">
+            <h2>Welcome to Blood Donation System</h2>
+        </div>
+        <div class="main-content">
+            <div class="content-box">
+                <h3>Blood Requests</h3>
+                <table>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Blood Group</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>O+</td>
+                        <td>Pending</td>
+                    </tr>
+                    <tr>
+                        <td>Jane Smith</td>
+                        <td>A-</td>
+                        <td>Approved</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="content-box">
+                <h3>Donor Availability</h3>
+                <table>
+                    <tr>
+                        <th>Donor</th>
+                        <th>Blood Group</th>
+                        <th>Available</th>
+                    </tr>
+                    <tr>
+                        <td>Mike Johnson</td>
+                        <td>B+</td>
+                        <td>Yes</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

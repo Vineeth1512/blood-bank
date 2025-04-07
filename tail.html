@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Patient Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: #333;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #e63946;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #1d3557;
+        }
+
+        .profile-info p,
+        .request-status li,
+        .notifications li {
+            margin: 0.4rem 0;
+        }
+
+        .request-form input,
+        .request-form textarea,
+        .request-form button {
+            width: 100%;
+            margin: 0.5rem 0;
+            padding: 0.7rem;
+            border-radius: 0.5rem;
+            border: 1px solid #ccc;
+        }
+
+        .request-form button {
+            background-color: #e63946;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .request-form button:hover {
+            background-color: #d62828;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Welcome, John Doe</h1>
+        <p>Last login: April 5, 2025</p>
+    </header>
+
+    <section class="dashboard">
+        <!-- Profile Overview -->
+        <div class="card profile-info">
+            <h2>Profile Overview</h2>
+            <p><strong>Name:</strong> John Doe</p>
+            <p><strong>Age:</strong> 28</p>
+            <p><strong>Gender:</strong> Male</p>
+            <p><strong>Blood Group:</strong> B+</p>
+            <p><strong>Location:</strong> Hyderabad</p>
+            <p><strong>Contact:</strong> johndoe@example.com</p>
+        </div>
+
+        <!-- Blood Request Status -->
+        <div class="card request-status">
+            <h2>Blood Request Status</h2>
+            <ul>
+                <li>🩸 B+ - 2 Units - <strong>Approved</strong> ✅</li>
+                <li>🩸 O- - 1 Unit - <strong>Pending</strong> ⏳</li>
+            </ul>
+        </div>
+
+        <!-- New Request Form -->
+        <div class="card request-form">
+            <h2>Make a New Blood Request</h2>
+            <form>
+                <input type="text" placeholder="Blood Group Needed" required>
+                <input type="number" placeholder="Units Required" required>
+                <textarea rows="3" placeholder="Reason (Optional)"></textarea>
+                <input type="text" placeholder="Hospital / Location" required>
+                <button type="submit">Submit Request</button>
+            </form>
+        </div>
+
+        <!-- Notifications -->
+        <div class="card notifications">
+            <h2>Notifications</h2>
+            <ul>
+                <li>✅ Your request for B+ has been approved.</li>
+                <li>⏳ Your O- request is pending.</li>
+                <li>📢 Blood camp on April 10 at Apollo Hospitals.</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2025 Blood Donation System | Designed by Vineeth Kumar
+    </footer>
+
+</body>
+
+</html>

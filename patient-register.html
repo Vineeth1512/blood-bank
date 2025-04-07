@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/header.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="index.html"><img src="images/blood-drop.jpeg" alt="Blood Drop Logo"></a>
+        </div>
+        <nav class="nav-links">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li class="dropdown">
+                    <a href="#">Looking For Blood</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="donars-list.html">Donor List</a></li>
+                        <li><a href="organize-list.html">Blood Bank List</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Donate Blood</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="patient-register.html">Patient Register</a></li>
+                        <li><a href="donor-register.html">Donor Register</a></li>
+                        <li><a href="organize-register.html">Organization Register</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <button class="login-btn">Log In</button>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li class="dropdown">
+                <a href="#">Looking For Blood</a>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="donars-list.html">Donor List</a></li>
+                    <li><a href="organize-list.html">Blood Bank List</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#">Donate Blood</a>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="patient-register.html">Patient Register</a></li>
+                    <li><a href="donor-register.html">Donor Register</a></li>
+                    <li><a href="organize-register.html">Organization Register</a></li>
+                </ul>
+            </li>
+            <li><a href="login.html">Log In</a></li>
+        </ul>
+    </div>
+
+    <div class="login-container">
+        <div class="login-left">
+            <!-- You can add an image here if needed -->
+        </div>
+        <div class="login-right">
+            <h2>Register</h2>
+            <form>
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" placeholder="Enter your full name" required />
+
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required />
+
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required />
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Confirm your password" required />
+                <p class="or-text" id="match"> </p>
+                <button type="submit" class="login-button">Register</button>
+                <p class="or-text">Already have an account? <a href="patient-login.html">Log In</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+        import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+
+        const firebaseAuthConfig = {
+            apiKey: "AIzaSyB0FeNmR15EAASokGjDMzqQBmXGRDxhipY",
+            authDomain: "blood-bank-patient.firebaseapp.com",
+            projectId: "blood-bank-patient",
+            storageBucket: "blood-bank-patient.firebasestorage.app",
+            messagingSenderId: "345768879626",
+            appId: "1:345768879626:web:850afb2b5deb9cba70a1f3",
+            measurementId: "G-SLQRXYNNTN"
+        };
+
+        const firebaseStoreConfig = {
+            apiKey: "AIzaSyAY0RgcKyYbqUiif_tXb_-GZiF-XU_T6cg",
+            authDomain: "blood-bank-94b23.firebaseapp.com",
+            projectId: "blood-bank-94b23",
+            storageBucket: "blood-bank-94b23.firebasestorage.app",
+            messagingSenderId: "108866595341",
+            appId: "1:108866595341:web:5d9c8a83056c53e0c50344"
+        };
+        const appAuth = initializeApp(firebaseAuthConfig, "authApp");
+        const appStore = initializeApp(firebaseStoreConfig, "storeApp");
+        const auth = getAuth(appAuth);
+        const db = getFirestore(appStore);
+
+
+
+
+        const registerForm = document.forms[0]
+        console.log(registerForm);
+        registerForm.addEventListener("submit", async (e) => {
+            e.preventDefault()
+            const fullName = document.querySelector("#fullName").value
+            const email = document.querySelector("#email").value
+            const password = document.querySelector("#password").value
+            const confirmPassword = document.querySelector("#confirmPassword").value
+            const match = document.querySelector("#match")
+            console.log(match);
+            if (password == confirmPassword) {
+                try {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+                    const user = userCredential.user
+
+                    await setDoc(doc(db, "users", user.uid), {
+                        id: user.uid,
+                        fullName: fullName,
+                        email: email,
+                        role: "patient",
+                        createdAt: new Date()
+                    })
+                    alert("Signup Succesfully")
+                    window.location.href = "patient-login.html"
+                } catch (err) {
+                    match.innerText = err.message
+                }
+
+            } else {
+                match.innerText = "Passwords are doesnot match"
+            }
+
+        })
+
+
+    </script>
+</body>
+
+</html>

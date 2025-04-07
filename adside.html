@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Dashboard with Sidebar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: #f1f4f9;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 220px;
+            background-color: #1d3557;
+            color: #fff;
+            min-height: 100vh;
+            padding: 1rem;
+            position: fixed;
+            transition: width 0.3s;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.4rem;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            margin: 1rem 0;
+            padding: 0.6rem;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+
+        .sidebar a:hover {
+            background-color: #457b9d;
+        }
+
+        /* Main content */
+        .main {
+            margin-left: 220px;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .main h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* Responsive toggle */
+        .toggle-btn {
+            display: none;
+            background-color: #1d3557;
+            color: white;
+            padding: 0.5rem 1rem;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 0;
+                overflow: hidden;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .toggle-btn {
+                display: block;
+            }
+
+            .sidebar.active {
+                width: 220px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Toggle Button -->
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <h2>Admin Panel</h2>
+        <a href="#" onclick="showSection('dashboard')">Dashboard</a>
+        <a href="#" onclick="showSection('donors')">Manage Donors</a>
+        <a href="#" onclick="showSection('patients')">Manage Patients</a>
+        <a href="#" onclick="showSection('requests')">Blood Requests</a>
+        <a href="#" onclick="showSection('createCamp')">Create Camp</a>
+        <a href="#" onclick="showSection('reports')">Reports</a>
+        <a href="#">Logout</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div id="dashboard" class="content-section active">
+            <h1>Dashboard Overview</h1>
+            <p>Total Donors: 125</p>
+            <p>Total Patients: 80</p>
+            <p>Total Requests: 58</p>
+        </div>
+
+        <div id="donors" class="content-section">
+            <h1>Manage Donors</h1>
+            <p>List of registered donors...</p>
+        </div>
+
+        <div id="patients" class="content-section">
+            <h1>Manage Patients</h1>
+            <p>List of registered patients...</p>
+        </div>
+
+        <div id="requests" class="content-section">
+            <h1>Blood Requests</h1>
+            <p>Pending/Approved/Rejected requests...</p>
+        </div>
+
+        <div id="createCamp" class="content-section">
+            <h1>Create Blood Camp</h1>
+            <form>
+                <input type="text" placeholder="Camp Name" required><br><br>
+                <input type="date" required><br><br>
+                <input type="text" placeholder="Location" required><br><br>
+                <textarea placeholder="Description"></textarea><br><br>
+                <button type="submit">Create</button>
+            </form>
+        </div>
+
+        <div id="reports" class="content-section">
+            <h1>Reports</h1>
+            <p>Analytics and summaries go here...</p>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        function showSection(id) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(id).classList.add('active');
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+    </script>
+</body>
+
+</html>

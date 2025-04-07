@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/header.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="index.html"><img src="images/blood-drop.jpeg" alt="Blood Drop Logo"></a>
+        </div>
+        <nav class="nav-links">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li class="dropdown">
+                    <a href="#">Looking For Blood</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="donars-list.html">Donor List</a></li>
+                        <li><a href="organize-list.html">Blood Bank List</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Donate Blood</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="patient-register.html">Patient Register</a></li>
+                        <li><a href="donor-register.html">Donor Register</a></li>
+                        <li><a href="organize-register.html">Organization Register</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <button class="login-btn">Log In</button>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li class="dropdown">
+                <a href="#">Looking For Blood</a>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="donars-list.html">Donor List</a></li>
+                    <li><a href="organize-list.html">Blood Bank List</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#">Donate Blood</a>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="#">Patient Register</a></li>
+                    <li><a href="register-donar.html">Donor Register</a></li>
+                    <li><a href="organize-register.html">Organization Register</a></li>
+                </ul>
+            </li>
+            <li><a href="donor-login.html">Log In</a></li>
+        </ul>
+    </div>
+
+    <div class="login-container">
+        <div class="login-left">
+            <!-- You can add an image here if needed -->
+        </div>
+        <div class="login-right">
+            <h2>Login</h2>
+            <form>
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required />
+
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required />
+
+                <a href="forgot-password.html" class="forgot-password">Forgot Password?</a>
+                <p class="or-text" id="match"></p>
+                <button type="submit" class="login-button" id="login-button">Login</button>
+
+                <p class="or-text">Don't have an account? <a href="donor-register.html">Sign up here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+        import { getFirestore, getDoc, doc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAY0RgcKyYbqUiif_tXb_-GZiF-XU_T6cg",
+            authDomain: "blood-bank-94b23.firebaseapp.com",
+            projectId: "blood-bank-94b23",
+            storageBucket: "blood-bank-94b23.firebasestorage.app",
+            messagingSenderId: "108866595341",
+            appId: "1:108866595341:web:5d9c8a83056c53e0c50344"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+
+
+        document.querySelector("form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const match = document.querySelector("#match");
+
+            if (!email || !password) {
+                match.innerText = "Please enter both email and password!";
+                return;
+            }
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    console.log(userData);
+
+                    localStorage.setItem("DonorData", JSON.stringify(userData));
+
+
+                    let isFirstTime = localStorage.getItem(`firstLogin-${user.uid}`);
+                    console.log(isFirstTime);
+
+
+                    if (!isFirstTime) {
+                        localStorage.setItem(`firstLogin-${user.uid}`, "true");
+                        window.location.href = "donor-update.html";
+                    } else {
+                        window.location.href = "donor-dashboard.html";
+                    }
+
+                    alert(`Login Successful!\nWelcome, ${userData.fullName}!`);
+
+                } else {
+                    alert("Login Successful, but no additional user data found!");
+                    window.location.href = "donor-update.html";
+                }
+            } catch (error) {
+                match.innerText = error.code === "auth/user-not-found"
+                    ? "User not found. Please register."
+                    : error.code === "auth/wrong-password"
+                        ? "Incorrect password. Try again."
+                        : "Login failed. Please try again.";
+            }
+        });
+
+
+
+
+    </script>
+</body>
+
+</html>
