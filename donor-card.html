@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Responsive Blood Donor Cards</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f8f9fa;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 300px;
+            transition: transform 0.3s;
+            padding: 20px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .top-section {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            margin-right: 15px;
+        }
+
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #e63946;
+        }
+
+        .upload-icon {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #e63946;
+            color: #fff;
+            border-radius: 50%;
+            padding: 4px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .user-info h2 {
+            margin: 0;
+            font-size: 17px;
+        }
+
+        .user-info p {
+            color: #777;
+            margin-top: 3px;
+            font-size: 13px;
+        }
+
+        .details {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .details p {
+            margin: 6px 0;
+        }
+
+        .details span {
+            font-weight: bold;
+            color: #e63946;
+        }
+
+        .actions {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn.edit {
+            background: #1d3557;
+            color: #fff;
+        }
+
+        .btn.edit:hover {
+            background: #16324f;
+        }
+
+        .btn.delete {
+            background: #e63946;
+            color: #fff;
+        }
+
+        .btn.delete:hover {
+            background: #c52f3a;
+        }
+
+        /* Responsive Layout */
+        @media (min-width: 768px) {
+            .card {
+                flex: 1 1 calc(50% - 20px);
+                /* 2 cards per row on tablets */
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .card {
+                flex: 1 1 calc(25% - 20px);
+                /* 4 cards per row on desktops */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Card 1 -->
+        <div class="card">
+            <div class="top-section">
+                <div class="avatar-wrapper">
+                    <img class="avatar" src="https://via.placeholder.com/70" alt="Donor">
+                    <div class="upload-icon">&#x2b06;</div>
+                </div>
+                <div class="user-info">
+                    <h2>Vineeth Kumar</h2>
+                    <p>Hyderabad, India</p>
+                </div>
+            </div>
+            <div class="details">
+                <p><span>Blood Group:</span> B+</p>
+                <p><span>Age:</span> 25</p>
+                <p><span>Email:</span> vineeth@example.com</p>
+                <p><span>Phone:</span> +91 9876543210</p>
+            </div>
+            <div class="actions">
+                <button class="btn edit">Edit</button>
+                <button class="btn delete" onclick="this.closest('.card').remove()">Delete</button>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card">
+            <div class="top-section">
+                <div class="avatar-wrapper">
+                    <img class="avatar" src="https://via.placeholder.com/70" alt="Donor">
+                    <div class="upload-icon">&#x2b06;</div>
+                </div>
+                <div class="user-info">
+                    <h2>Priya Sharma</h2>
+                    <p>Mumbai, India</p>
+                </div>
+            </div>
+            <div class="details">
+                <p><span>Blood Group:</span> O+</p>
+                <p><span>Age:</span> 30</p>
+                <p><span>Email:</span> priya@example.com</p>
+                <p><span>Phone:</span> +91 9876543211</p>
+            </div>
+            <div class="actions">
+                <button class="btn edit">Edit</button>
+                <button class="btn delete" onclick="this.closest('.card').remove()">Delete</button>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card">
+            <div class="top-section">
+                <div class="avatar-wrapper">
+                    <img class="avatar" src="https://via.placeholder.com/70" alt="Donor">
+                    <div class="upload-icon">&#x2b06;</div>
+                </div>
+                <div class="user-info">
+                    <h2>Ravi Teja</h2>
+                    <p>Chennai, India</p>
+                </div>
+            </div>
+            <div class="details">
+                <p><span>Blood Group:</span> A-</p>
+                <p><span>Age:</span> 28</p>
+                <p><span>Email:</span> ravi@example.com</p>
+                <p><span>Phone:</span> +91 9876543212</p>
+            </div>
+            <div class="actions">
+                <button class="btn edit">Edit</button>
+                <button class="btn delete" onclick="this.closest('.card').remove()">Delete</button>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card">
+            <div class="top-section">
+                <div class="avatar-wrapper">
+                    <img class="avatar" src="https://via.placeholder.com/70" alt="Donor">
+                    <div class="upload-icon">&#x2b06;</div>
+                </div>
+                <div class="user-info">
+                    <h2>Sneha Reddy</h2>
+                    <p>Bangalore, India</p>
+                </div>
+            </div>
+            <div class="details">
+                <p><span>Blood Group:</span> AB+</p>
+                <p><span>Age:</span> 24</p>
+                <p><span>Email:</span> sneha@example.com</p>
+                <p><span>Phone:</span> +91 9876543213</p>
+            </div>
+            <div class="actions">
+                <button class="btn edit">Edit</button>
+                <button class="btn delete" onclick="this.closest('.card').remove()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

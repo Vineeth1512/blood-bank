@@ -243,6 +243,12 @@
                     ...data,
                     updatedAt: new Date()
                 });
+
+                localStorage.setItem("patientData", JSON.stringify({
+                    ...patientData,
+                    ...data
+                }))
+
             } else {
                 throw new Error("No donor data found.");
             }

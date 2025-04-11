@@ -257,6 +257,10 @@
                             <td id="donor-address"></td>
                         </tr>
                         <tr>
+                            <td>Availability</td>
+                            <td id="donor-availability"></td>
+                        </tr>
+                        <tr>
                             <td>Last Donation Date</td>
                             <td id="donor-lastDonation"></td>
                         </tr>
@@ -326,6 +330,7 @@
                     document.getElementById("donor-bloodGroup").innerText = donor.bloodGroup || "N/A";
                     document.getElementById("donor-address").innerText = donor.address || "N/A";
                     document.getElementById("donor-lastDonation").innerText = donor.lastDonation || "N/A";
+                    document.getElementById("donor-availability").innerText = donor.availability || "N/A";
 
 
 

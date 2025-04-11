@@ -33,7 +33,18 @@
                 </li>
             </ul>
         </nav>
-        <button class="login-btn">Log In</button>
+
+
+
+        <div class="profile-dropdown">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBb2P4yPPrTY_H7OpNzOPDL1-z8soSbx8vJg&s"
+                alt="Profile" id="header-profile" class="profile-pic" onclick="toggleProfileDropdown()" />
+            <ul class="profile-menu" id="profileMenu">
+                <li><a href="donor-edit.html">Edit Profile</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+
         <div class="hamburger" onclick="toggleMenu()">
             <div></div>
             <div></div>
@@ -59,7 +70,7 @@
 
     <div class="container">
         <div class="header">
-            <h2>Register As Donor</h2>
+            <h2>Edit Donor</h2>
         </div>
 
         <form>
@@ -160,6 +171,8 @@
 
         function populateDonorData() {
             let donorData = JSON.parse(localStorage.getItem("DonorData"));
+            console.log(donorData);
+
 
             if (donorData) {
                 document.getElementById("sign-firstName").value = donorData.fullName || "";
@@ -172,7 +185,8 @@
                 document.getElementById("sign-available").value = donorData.availability || "";
                 document.getElementById("sign-blood-group").value = donorData.bloodGroup || "";
                 document.getElementById("sign-last-donate").value = donorData.lastDonation || "";
-                document.getElementById("sign-profile").src = donorData.profileURL || "";
+                document.getElementById("sign-profile").src = donorData.profilePic || "";
+                document.getElementById("header-profile").src = donorData.profilePic || "";
             }
         }
 
@@ -276,6 +290,35 @@
         }
 
 
+
+
+    </script>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector('.mobile-menu');
+            menu.classList.toggle('active');
+        }
+
+        function toggleProfileDropdown() {
+            const menu = document.getElementById('profileMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        window.addEventListener('click', function (e) {
+            const menu = document.getElementById('profileMenu');
+            const profilePic = document.querySelector('.profile-pic');
+            if (!profilePic.contains(e.target) && !menu.contains(e.target)) {
+                menu.style.display = 'none';
+            }
+        });
+
+        function logout() {
+            alert("You have been logged out.");
+            // Clear localStorage/sessionStorage if used
+            // Redirect to login page
+            window.location.href = "donor-login.html";
+        }
     </script>
 </body>
 

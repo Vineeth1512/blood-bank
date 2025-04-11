@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation List</title>
+
+    <link rel="stylesheet" href="css/donor-list.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/donor-search.css">
+    <link rel="stylesheet" href="css/donor-table.css">
+</head>
+
+<body>
+
+
+    <header>
+
+        <div class="logo">
+            <a href="index.html"> <img src="images/blood-drop.jpeg" alt="Blood Drop Logo"></a>
+        </div>
+        <nav class="nav-links">
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="#">About Us</a></li>
+
+
+                <li class="dropdown">
+                    <a href="#">Looking For Blood</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="patient-donor-list.html">Donar List</a></li>
+                        <li><a href="organize-list.html">Blood Bank List</a></li>
+
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Donate Blood</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="patient-register.html">Patient Register</a></li>
+                        <li><a href="donor-register.html">Donor Register</a></li>
+                        <li><a href="organize-register.html">Organization Register</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+
+        <div class="profile-dropdown">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBb2P4yPPrTY_H7OpNzOPDL1-z8soSbx8vJg&s"
+                alt="Profile" id="header-profile" class="profile-pic" onclick="toggleProfileDropdown()" />
+            <ul class="profile-menu" id="profileMenu">
+                <li><a href="patient-edit.html">Edit Profile</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">About Us</a></li>
+
+            <li class="dropdown">
+                <a href="#">Looking For Blood</a>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="donars-list.html">Donar List</a></li>
+                    <li><a href="organize-list.html">Blood Bank List</a></li>
+
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#">Donate Blood</a>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="patient-register.html">Patient Register</a></li>
+                    <li><a href="donor-register.html">Donor Register</a></li>
+                    <li><a href="organize-register.html">Organization Register</a></li>
+                </ul>
+            </li>
+            <li><a href="login.html">Log In</a></li>
+        </ul>
+    </div>
+
+    <section>
+        <div class="blood-stock-section">
+            <h2>Blood Stock Availability</h2>
+
+            <div class="search-box">
+                <div class="search-header">Search Blood Stock</div>
+                <div class="form-row">
+                    <input type="text" id="locationInput" placeholder="Enter location">
+
+                    <select id="bloodGroupSelect">
+                        <option value="">All Blood Groups</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                    </select>
+                </div>
+
+                <div class="search-btn">
+                    <button id="search-button" onclick="searchDonors()">Search</button>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <div class="content-wrap">
+
+
+        <!-- Tab Navigation -->
+        <!-- <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('donors')">Blood Donors</button>
+            <button class="tab-btn" onclick="showTab('banks')">Blood Banks</button>
+        </div> -->
+
+        <!-- Blood Donors List -->
+        <div id="donors" class="tab-content active">
+
+
+        </div>
+
+
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+            import { getAuth } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+            import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+
+            // Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyAY0RgcKyYbqUiif_tXb_-GZiF-XU_T6cg",
+                authDomain: "blood-bank-94b23.firebaseapp.com",
+                projectId: "blood-bank-94b23",
+                storageBucket: "blood-bank-94b23.firebasestorage.app",
+                messagingSenderId: "108866595341",
+                appId: "1:108866595341:web:5d9c8a83056c53e0c50344"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const db = getFirestore(app); // Firestore database instance
+
+            // Function to fetch data from Firestore
+            window.editDonor = (donor) => {
+
+                localStorage.setItem("DonorData", JSON.stringify(donor)); // Store donor data
+                window.location.href = `donor-edit.html?id=${donor.id}`;
+            }
+            let allDonors = [];
+            async function fetchData() {
+                try {
+                    const querySnapshot = await getDocs(collection(db, "users")); // Fetch all users
+
+                    allDonors = [];
+
+                    querySnapshot.forEach((doc) => {
+                        let userData = doc.data();
+
+                        if (userData.role === "donor") {
+                            allDonors.push({ id: doc.id, ...userData });
+                        }
+                    });
+                    renderDonors(allDonors)
+
+
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                }
+
+
+            }
+
+            function renderDonors(donors) {
+                let donorsContainer = document.querySelector("#donors");
+
+                if (donors.length === 0) {
+                    donorsContainer.innerHTML = "<p>No donors found.</p>";
+                    return;
+                }
+
+                let tableHTML = `
+    <div style="overflow-x:auto;">
+        <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse; background: white;">
+            <thead style="background-color: #7b1337; color: white;">
+                <tr>
+                    <th>Name</th>
+                    <th>Blood Group</th>
+                    <th>Location</th>
+                    <th>Availability</th>
+                    <th>Phone</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+                donors.forEach((donor) => {
+                    const isAvailable = donor.availability === "Available" || donor.availability === true;
+                    const availabilityText = isAvailable ? "Available" : "Unavailable";
+                    const availabilityColor = isAvailable ? "green" : "#7b1337";
+
+                    tableHTML += `
+            <tr>
+                <td>${donor.fullName || "N/A"}</td>
+                <td>${donor.bloodGroup || "N/A"}</td>
+                <td>${donor.address || "N/A"}</td>
+                <td style="color: ${availabilityColor}; font-weight: bold;">${availabilityText}</td>
+               
+                <td>
+                    <button class="request-btn" ${!isAvailable ? "disabled" : ""} onclick="window.location.href='tel:${donor.phoneNumber || ''}'"">Request to Call</button>
+                </td>
+            </tr>
+        `;
+                });
+
+                tableHTML += `
+            </tbody>
+        </table>
+    </div>
+    `;
+
+                donorsContainer.innerHTML = tableHTML;
+            }
+
+
+
+
+            fetchData();
+
+
+
+            window.searchDonors = (donor) => {
+                const locationInput = document.getElementById("locationInput").value.toLowerCase();
+                const bloodGroupInput = document.getElementById("bloodGroupSelect").value;
+
+                const filteredDonors = allDonors.filter((donor) => {
+                    const donorLocation = donor.address?.toLowerCase() || ""
+                    const matchesLocation = locationInput ? donorLocation.includes(locationInput) : true;
+                    const matchesBloodGroup = bloodGroupInput ? donor.bloodGroup === bloodGroupInput : true
+
+                    return matchesLocation && matchesBloodGroup
+                })
+                renderDonors(filteredDonors)
+            }
+
+
+            const patientData = JSON.parse(localStorage.getItem("patientData"))
+            console.log(patientData);
+            if (patientData) {
+                document.getElementById("header-profile").src = patientData.profilePic
+            }
+        </script>
+
+        <script>
+            function toggleMenu() {
+                const menu = document.querySelector('.mobile-menu');
+                menu.classList.toggle('active');
+            }
+
+            function toggleProfileDropdown() {
+                const menu = document.getElementById('profileMenu');
+                menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+            }
+
+            window.addEventListener('click', function (e) {
+                const menu = document.getElementById('profileMenu');
+                const profilePic = document.querySelector('.profile-pic');
+                if (!profilePic.contains(e.target) && !menu.contains(e.target)) {
+                    menu.style.display = 'none';
+                }
+            });
+
+
+
+            function logout() {
+                alert("You have been logged out.");
+                // Clear localStorage/sessionStorage if used
+                // Redirect to login page
+                window.location.href = "patient-login.html";
+            }
+        </script>
+</body>
+
+</html>

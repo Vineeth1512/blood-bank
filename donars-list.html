@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="css/donor-list.css">
     <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/donor-card.css">
 </head>
 
 <body>
@@ -73,46 +74,20 @@
 
 
         <!-- Tab Navigation -->
-        <div class="tabs">
+        <!-- <div class="tabs">
             <button class="tab-btn active" onclick="showTab('donors')">Blood Donors</button>
             <button class="tab-btn" onclick="showTab('banks')">Blood Banks</button>
-        </div>
+        </div> -->
 
         <!-- Blood Donors List -->
-        <div id="donors" class="tab-content active">
+        <div id="donors" class="tab-content active ">
 
         </div>
 
-        <!-- Blood Banks List -->
-        <div id="banks" class="tab-content">
-            <div class="blood-bank-card">
-                <h3>NAME OF THE BLOOD BANK</h3>
-                <p>ABC Hospital Building, XYZ Road, Place, District<br>Pincode</p>
-                <p><strong>Contact Number:</strong> XXXXXXXXXX</p>
-                <button class="location-btn">View Location</button>
-            </div>
 
-            <div class="blood-bank-card">
-                <h3>NAME OF THE BLOOD BANK</h3>
-                <p>ABC Hospital Building, XYZ Road, Place, District<br>Pincode</p>
-                <p><strong>Contact Number:</strong> XXXXXXXXXX</p>
-                <button class="location-btn">View Location</button>
-            </div>
-        </div>
+
     </div>
-    <script>
-        function showTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
 
-            document.getElementById(tabName).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-    </script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
@@ -161,17 +136,31 @@
 
                 usersArray.forEach((donor) => {
                     donorsContainer.innerHTML += `
-                <div class="donor-card">
-                    <h3>Name: ${donor.fullName}</h3>
-                    <p><strong>Blood Group:</strong> ${donor.bloodGroup || "N/A"}</p>
-                    <p><strong>Age:</strong> ${donor.age || "N/A"}</p>
-                     <p><strong>Phone :</strong> ${donor.phoneNumber || "N/A"}</p>
-                    <p><strong>Gender:</strong> ${donor.gender || "N/A"}</p>
-                    <p><strong>Location:</strong> ${donor.address || "N/A"}</p>
-                    <p><strong>Last Donation:</strong> ${donor.lastDonation || "N/A"}</p>
-                      <p><strong>Availability to Donate Blood : </strong> ${donor.availability || "N/A"}</p>
-                    
+                    <div class="card">
+            <div class="top-section">
+                <div class="avatar-wrapper">
+                    <img class="avatar" src="${donor.profilePic}">
                 </div>
+                <div class="user-info">
+                    <h2>${donor.fullName}</h2>
+                    <p>${donor.address}, India</p>
+                </div>
+            </div>
+            <div class="details">
+                <p><span>Blood Group:</span> ${donor.bloodGroup}</p>
+                <p><span>Age:</span> ${donor.age}</p>
+                <p><span>Email:</span> ${donor.email}</p>
+                <p><span>Phone:</span> ${donor.phoneNumber}</p>
+                 <p><span>Availability:</span> ${donor.availability}</p>
+            </div>
+            <div class="actions">
+                <button class="btn edit">Edit</button>
+                <button class="btn delete" onclick="this.closest('.card').remove()">Delete</button>
+            </div>
+        </div>
+
+
+               
             `;
 
                 });

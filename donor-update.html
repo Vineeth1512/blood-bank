@@ -356,6 +356,11 @@
                     ...data,
                     updatedAt: new Date()
                 });
+
+                localStorage.setItem("DonorData", JSON.stringify({
+                    ...donarData,
+                    ...data
+                }))
             } else {
                 throw new Error("No donor data found.");
             }
