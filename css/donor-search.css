@@ -61,3 +61,27 @@
 .search-btn button:hover {
   background-color: #3f0d26;
 }
+
+#generalSearchInput {
+  width: 100%;
+  max-width: 450px;
+  padding: 0.75rem 1.25rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 2rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+#generalSearchInput:focus {
+  outline: none;
+  border-color: #8b1e3f;
+  box-shadow: 0 0 0 4px rgba(198, 40, 40, 0.1);
+}
+
+/* Optional: Add a search icon inside the input field */
+#generalSearchInput::placeholder {
+  color: #999;
+  font-style: italic;
+}

@@ -108,9 +108,9 @@
                     </select>
                 </div>
 
-                <div class="search-btn">
+                <!-- <div class="search-btn">
                     <button id="search-button" onclick="searchDonors()">Search</button>
-                </div>
+                </div> -->
             </div>
         </div>
 
@@ -119,13 +119,6 @@
     <div class="content-wrap">
 
 
-        <!-- Tab Navigation -->
-        <!-- <div class="tabs">
-            <button class="tab-btn active" onclick="showTab('donors')">Blood Donors</button>
-            <button class="tab-btn" onclick="showTab('banks')">Blood Banks</button>
-        </div> -->
-
-        <!-- Blood Donors List -->
         <div id="donors" class="tab-content active">
 
 
@@ -153,11 +146,11 @@
             const db = getFirestore(app); // Firestore database instance
 
             // Function to fetch data from Firestore
-            window.editDonor = (donor) => {
+            // window.editDonor = (donor) => {
 
-                localStorage.setItem("DonorData", JSON.stringify(donor)); // Store donor data
-                window.location.href = `donor-edit.html?id=${donor.id}`;
-            }
+            //     localStorage.setItem("DonorData", JSON.stringify(donor)); // Store donor data
+            //     window.location.href = `donor-edit.html?id=${donor.id}`;
+            // }
             let allDonors = [];
             async function fetchData() {
                 try {
@@ -240,20 +233,32 @@
             fetchData();
 
 
+            document.getElementById("locationInput").addEventListener("input", () => {
+                searchDonors();
+            });
 
-            window.searchDonors = (donor) => {
+
+            document.getElementById("bloodGroupSelect").addEventListener("change", () => {
+                searchDonors();
+            });
+
+
+
+
+            window.searchDonors = () => {
                 const locationInput = document.getElementById("locationInput").value.toLowerCase();
                 const bloodGroupInput = document.getElementById("bloodGroupSelect").value;
 
                 const filteredDonors = allDonors.filter((donor) => {
-                    const donorLocation = donor.address?.toLowerCase() || ""
+                    const donorLocation = donor.address?.toLowerCase() || "";
                     const matchesLocation = locationInput ? donorLocation.includes(locationInput) : true;
-                    const matchesBloodGroup = bloodGroupInput ? donor.bloodGroup === bloodGroupInput : true
+                    const matchesBloodGroup = bloodGroupInput ? donor.bloodGroup === bloodGroupInput : true;
 
-                    return matchesLocation && matchesBloodGroup
-                })
-                renderDonors(filteredDonors)
-            }
+                    return matchesLocation && matchesBloodGroup;
+                });
+
+                renderDonors(filteredDonors);
+            };
 
 
             const patientData = JSON.parse(localStorage.getItem("patientData"))
